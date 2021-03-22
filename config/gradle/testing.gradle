@@ -1,0 +1,14 @@
+// Apply to execute mutation test
+apply plugin: 'info.solidsoft.pitest'
+
+// -=- UNIT TEST - MUTATION -=-
+// goal: gradle pitest
+pitest {
+	threads = Runtime.getRuntime().availableProcessors()
+    mutationThreshold = 80 // percent perform at pass
+	verbose = false // Enable/disable execution logging
+	jvmArgs = ['-Xmx1024m']
+	junit5PluginVersion = '0.12'
+	outputFormats = ['XML', 'HTML']
+	reportDir = file("$buildDir/reports/tests/mutation")
+}

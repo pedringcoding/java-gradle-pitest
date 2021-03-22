@@ -1,0 +1,31 @@
+plugins {
+	id 'java-library'
+	// Automatic lombok configuration
+	id 'io.freefair.lombok' version "$lombokVersion"
+	// mutation testing
+	id 'info.solidsoft.pitest' version "$pitestVersion"
+}
+
+group = gradle.ext.ProjectGroup
+version = gradle.ext.ProjectVersion
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+// repositories allowed to management dependencies
+apply from: "$rootDir/config/gradle/repositories.gradle"
+// Add support to testing step
+apply from: "$rootDir/config/gradle/testing.gradle"
+
+dependencies {
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitJupiterVersion"
+	testImplementation "org.junit.jupiter:junit-jupiter-engine:$jUnitJupiterVersion"
+	testImplementation "org.assertj:assertj-core:$assertJCoreVersion"
+}
+
+test {
+	useJUnitPlatform()
+}
+
+// mutation test arguments
+pitest {
+	junit5PluginVersion = '0.12'
+}

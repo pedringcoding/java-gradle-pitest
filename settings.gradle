@@ -1,0 +1,4 @@
+rootProject.name = 'mutation-testing'
+
+gradle.ext.ProjectGroup = 'es.ekites'
+gradle.ext.ProjectVersion = '0.0.1-SNAPSHOT'
