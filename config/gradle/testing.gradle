@@ -5,7 +5,7 @@ apply plugin: 'info.solidsoft.pitest'
 // goal: gradle pitest
 pitest {
 	threads = Runtime.getRuntime().availableProcessors()
-    mutationThreshold = 80 // percent perform at pass
+	mutationThreshold = 80 // percent perform at pass
 	verbose = false // Enable/disable execution logging
 	jvmArgs = ['-Xmx1024m']
 	junit5PluginVersion = '0.12'

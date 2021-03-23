@@ -3,7 +3,7 @@ plugins {
 	// Automatic lombok configuration
 	id 'io.freefair.lombok' version "$lombokVersion"
 	// mutation testing
-	id 'info.solidsoft.pitest' version "$pitestVersion"
+	id 'info.solidsoft.pitest' version "$pitestVersion" apply false
 }
 
 group = gradle.ext.ProjectGroup
@@ -23,9 +23,4 @@ dependencies {
 
 test {
 	useJUnitPlatform()
-}
-
-// mutation test arguments
-pitest {
-	junit5PluginVersion = '0.12'
 }
