@@ -1,14 +1,14 @@
 # Mutation Testing [![Awesome](https://awesome.re/badge-flat.svg)](https://awesome.re)
 
-## Introduction to Mutation Testing
+## :clipboard: Introduction to Mutation Testing
 
 Most developers are familiar with the concept of unit testing, and how this is useful to ensure the validity of your code, and guard against bugs creeping up in the future. Java developers will typically use [JUnit](https://junit.org/junit5/) to write their unit tests. Many projects use test coverage tools such as [Jacoco](https://www.eclemma.org/jacoco/) to ensure that the code as written has tests to validate it. But how strong are the tests? Will they stand up against bugs introduced by future code changes? 
 
 [Mutation testing](https://en.wikipedia.org/wiki/Mutation_testing) helps ensure that that tests themselves are of high quality by introducing random bugs, or mutations, and checking if any of the unit tests can catch the bug. While this concept has been around for a while, it is just recently that good tools are becoming available for this purpose. One such tool is [PIT](https://pitest.org/).
 
-## Getting Started
+## :cloud: Getting Started
 
-Follow along this tutorial. You will need to have at least [Java 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) installed or some openJDK distribution, and [Gradle](https://gradle.org/) on the PATH. Clone this repository, and fire up a command-line tool.
+Follow along this notes. You will need to have at least [Java 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) installed or some openJDK distribution, and [Gradle](https://gradle.org/) on the PATH. Clone this repository, and fire up a command-line tool.
 
 > To know the testing technique mutation tests, It necessary check diff between _fake-coverage_ and _true-coverage_
 
@@ -20,7 +20,7 @@ Must be enabled unit test _OperationMutationTest_ to compare results and execute
 gradle pitest
 ```
 
-### Existing libraries
+## :clipboard: Existing libraries according to programing language
 
 * C/C++
   * [mutate_cpp](https://github.com/nlohmann/mutate_cpp)
@@ -62,3 +62,7 @@ gradle pitest
   * [SeanROlszewski/muter](https://github.com/SeanROlszewski/muter) 
 * Other
   * [boggart](https://github.com/squaresLab/boggart)
+
+# :coffee: Buy us a coffee
+
+I will continue to do things and expose notes, but donations are one of the many ways to support what I do. <a href="https://www.buymeacoffee.com/pedringcoding" title="Donate to this content using BuyMeACoffee">Contribute</a>
