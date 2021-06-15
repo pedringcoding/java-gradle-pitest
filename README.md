@@ -10,7 +10,7 @@ Most developers are familiar with the concept of unit testing, and how this is u
 
 Follow along this notes. You will need to have at least [Java 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) installed or some openJDK distribution, and [Gradle](https://gradle.org/) on the PATH. 
 
-You can use some package management tool for windows. E.g. Chocolatey
+You can use some package management tool for windows. E.g. [Chocolatey](https://chocolatey.org/install)
 
 *	[OpenJDK8 Zulu](https://azul.com) - Java Development Kits (OpenJDK build)
 
