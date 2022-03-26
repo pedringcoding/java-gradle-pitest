@@ -1,15 +1,12 @@
-package es.ekites.mutest.commons;
+package es.pedcod.mutation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.MethodName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,6 @@ import org.junit.jupiter.api.TestMethodOrder;
  * Unit Test Class for {@link Operation} to utilities.
  * Only execute tests to return true-coverage.
  */
-@Disabled
 @DisplayName("True-Tests for common operations")
 @TestMethodOrder(MethodName.class)
 public class OperationMutationTest {
@@ -53,10 +49,13 @@ public class OperationMutationTest {
 	public void whenInstanciateClass_shouldThrowUnsupportedOperationException() throws Exception {
 		Constructor<Operation> constructor = Operation.class.getDeclaredConstructor();
 
-		assertTrue(Modifier.isPrivate(constructor.getModifiers()));
-		assertFalse(Modifier.isStatic(constructor.getModifiers()));
-		constructor.setAccessible(Boolean.TRUE);
+		assertThat(constructor).satisfies(cons -> {
+			assertThat(Modifier.isPrivate(cons.getModifiers())).isTrue();
+			assertThat(Modifier.isStatic(cons.getModifiers())).isFalse();
+		});
 
+		// Should throw UnsupportedOperation exception when cannot be instantiated
+		constructor.setAccessible(Boolean.TRUE);
 		assertThrows(InvocationTargetException.class, constructor::newInstance);
 	}
 

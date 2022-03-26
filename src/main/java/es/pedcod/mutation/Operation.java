@@ -1,4 +1,4 @@
-package es.ekites.mutest.commons;
+package es.pedcod.mutation;
 
 import lombok.experimental.UtilityClass;
 
