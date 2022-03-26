@@ -1,4 +1,4 @@
-package es.ekites.mutest.commons;
+package es.pedcod.mutation;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.MethodName;

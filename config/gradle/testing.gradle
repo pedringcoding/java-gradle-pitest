@@ -1,14 +1,74 @@
 // Apply to execute mutation test
 apply plugin: 'info.solidsoft.pitest'
+// Add support for test coverage
+apply plugin: 'io.freefair.aggregate-jacoco-report'
+
+dependencies {
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitJupiterVersion"
+	testImplementation "org.junit.jupiter:junit-jupiter-engine:$jUnitJupiterVersion"
+	testImplementation "org.assertj:assertj-core:$assertJCoreVersion"
+}
+
+// https://discuss.gradle.org/t/integration-tests-not-being-run/28745/2
+tasks.withType(Test) {
+    useJUnitPlatform()
+	scanForTestClasses = false
+	// support JUnit platform for parllel executions
+	maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+	// Show that tests are run in the command-line output
+	testLogging {
+        events "skipped", "failed"
+    }
+    afterSuite { desc, result ->
+    	if (!desc.parent) { // will match the outermost suite
+        	def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+           	def startItem = '|  ', endItem = '  |'
+           	def repeatLength = startItem.length() + output.length() + endItem.length()
+           	println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+       	}
+   	}
+}
+
+
+// -=- UNIT TEST - COVERAGE -=-
+// goal: gradle check
+jacoco {
+	reportsDir = file("$buildDir/reports/tests/coverage")
+}
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+	reports {
+		xml.enabled true
+		html.enabled false
+		csv.enabled false
+	}
+}
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.9 // percent perform at pass. By default, 0.8
+			}
+		}
+	}
+}
+// to run coverage verification during the build (and fail when appropriate)
+check.finalizedBy jacocoTestCoverageVerification
+check.finalizedBy jacocoTestReport
+// to delimiter execution at needed pre-step
+jacocoTestCoverageVerification.dependsOn test
+
 
 // -=- UNIT TEST - MUTATION -=-
-// goal: gradle pitest
+// goal: gradle check
 pitest {
 	threads = Runtime.getRuntime().availableProcessors()
 	mutationThreshold = 80 // percent perform at pass
+    failWhenNoMutations = false
 	verbose = false // Enable/disable execution logging
 	jvmArgs = ['-Xmx1024m']
 	junit5PluginVersion = '0.12'
+	targetClasses = ['es.pedcod.mutest.commons.*']
 	outputFormats = ['XML', 'HTML']
 	reportDir = file("$buildDir/reports/tests/mutation")
 }

@@ -1,0 +1,27 @@
+// Add support to analyzing projects
+apply plugin: 'org.sonarqube'
+apply plugin: 'jacoco'
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://host.docker.internal:19000"
+        property "sonar.projectName", "${project.name}"
+        property "sonar.projectDescription", "${project.description}"
+		property "sonar.projectVersion", "${project.version}"
+        property "sonar.projectBaseDir", "${project.projectDir}"
+        property "sonar.working.directory", "${project.buildDir}/sonar"
+
+        property "sonar.sourceEncoding", "${project.compileJava.options.encoding}"
+        property "sonar.java.source", "${project.sourceCompatibility}"
+        property "sonar.java.target", "${project.targetCompatibility}"
+		property "sonar.sources", "src/main/java"
+		property "sonar.tests", "src/test/java"
+		property "sonar.java.binaries", "${sourceSets.main.output.classesDirs}"
+		property "sonar.java.libraries", "${sourceSets.main.compileClasspath}"
+		property "sonar.java.test.binaries", "${sourceSets.test.output.classesDirs}"
+		property "sonar.java.test.libraries", "${sourceSets.test.compileClasspath}"
+		property "sonar.junit.reportPaths", "${test.testClassesDirs}"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${test.jacoco.destinationFile}"
+		property "sonar.pitest.reportsDirectory", "${pitest.reportDir}"
+    }
+}
