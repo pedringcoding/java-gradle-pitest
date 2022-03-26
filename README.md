@@ -17,10 +17,10 @@ Clone this repository, and fire up a command-line tool.
 ## :computer: Commands to execute
 
 Must be enabled unit test _OperationMutationTest_ to compare results and execute:
-
 ```
 docker-compose -f docker/docker-compose.yml --env-file=.env up -d
 ```
+
 Wait for sonarqube to complete startup... You can check accessing to [sonarqube](http://localhost:19000)
 ```
 docker exec -it desktop /bin/bash
@@ -30,6 +30,11 @@ gradle sonarqube
 <img src="config/sq-analyzed.png">
 
 _Note: If request credentials in sonarqube access, you can use **admin:admin**_
+
+To clean up the deployed context:
+```
+docker-compose -f docker/docker-compose.yml down -v --rmi all
+```
 
 ## :octocat: Can you support me?
 
