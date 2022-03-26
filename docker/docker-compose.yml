@@ -1,0 +1,53 @@
+version: "3.4"
+
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "200k"
+    max-file: "10"
+
+services:
+  application:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    image: pedringcoding/desktop:latest
+    container_name: desktop
+    depends_on:
+      - sonar
+    networks:
+      - sonarnet
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "localhost:192.168.0.10"
+    volumes:
+      - gradle-repo:/home/gradle/.gradle
+    logging: *default-logging
+
+  sonar:
+    image: sonarqube:${SONAR_VERSION}
+    container_name: sonarqube
+    ports:
+    - "19000:9000"
+    networks:
+      - sonarnet
+    volumes:
+    - sonar-data:/opt/sonarqube/data
+    - sonar-extension:/opt/sonarqube/extensions
+    - ./config/sonarqube/plugins/:/opt/sonarqube/extensions
+    logging: *default-logging
+
+networks:
+  sonarnet:
+
+volumes:
+  sonar-data:
+    driver: local
+    name: sonar-${SONAR_VERSION}-data
+  sonar-extension:
+    driver: local
+    name: sonar-${SONAR_VERSION}-extensions
+  gradle-repo:
+    driver: local
+    name: gradle-repository
