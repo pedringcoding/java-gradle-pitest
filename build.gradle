@@ -4,23 +4,20 @@ plugins {
 	id 'io.freefair.lombok' version "$lombokVersion"
 	// mutation testing
 	id 'info.solidsoft.pitest' version "$pitestVersion" apply false
+	/* Aggregate Jacoco Report Plugin */
+	id 'io.freefair.aggregate-jacoco-report' version "$jacocoPdfVersion" apply false
+	/* help analyzing projects with SonarQube */
+	id 'org.sonarqube' version "$sonarQubeVersion" apply false
 }
 
-group = gradle.ext.ProjectGroup
-version = gradle.ext.ProjectVersion
+group = "es.pedcod.mutation"
+version = "0.0.1-SNAPSHOT"
 sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 // repositories allowed to management dependencies
 apply from: "$rootDir/config/gradle/repositories.gradle"
 // Add support to testing step
 apply from: "$rootDir/config/gradle/testing.gradle"
-
-dependencies {
-	testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitJupiterVersion"
-	testImplementation "org.junit.jupiter:junit-jupiter-engine:$jUnitJupiterVersion"
-	testImplementation "org.assertj:assertj-core:$assertJCoreVersion"
-}
-
-test {
-	useJUnitPlatform()
-}
+// Add support to analyzing projects and properties for this
+apply from: "$rootDir/config/gradle/sonarqube.gradle"
